@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AGE Capital Structure</title>
+  <meta name="description" content="Capital structure calculator for the AGE case: Campus Deli and Sub Shop, Firm U and Firm L.">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <p class="eyebrow">FIN 4150 · AGE case</p>
+    <h1>AGE Capital Structure</h1>
+    <p class="lede">How borrowing changes return, risk, share price and cost of capital. Every figure is read from the files in <code>data/</code>.</p>
+  </header>
+
+  <main>
+    <p id="status" class="status" role="status">Loading data…</p>
+
+    <section id="firms" hidden>
+      <h2>Firm U and Firm L <span class="tag">question c</span></h2>
+      <p class="note" id="firms-intro"></p>
+      <div class="firm-grid">
+        <div class="table-wrap"><table id="firm-u"></table></div>
+        <div class="table-wrap"><table id="firm-l"></table></div>
+      </div>
+      <p class="note">Firm U has no interest, so its TIE, E(TIE) and σ(TIE) are shown as n/a. CV is the coefficient of variation: standard deviation ÷ expected value.</p>
+    </section>
+
+    <section id="cdss" hidden>
+      <h2>Campus Deli and Sub Shop <span class="tag">question d</span></h2>
+      <p class="note" id="cdss-intro"></p>
+      <p id="zero-check" class="check"></p>
+
+      <h3>Same under both buyback methods</h3>
+      <div class="table-wrap"><table id="cdss-common" class="by-debt"></table></div>
+
+      <h3>Case method: buy back at today's $20 <span class="tag">d(3) and d(4)</span></h3>
+      <p class="note">Shares repurchased = D ÷ $20. EPS = net income ÷ shares remaining. Price = EPS ÷ r<sub>s</sub>. WACC uses book weights, as the AGE solution does for d(7).</p>
+      <div class="table-wrap"><table id="cdss-case" class="by-debt"></table></div>
+
+      <h3>New-price method: buy back at the price after the announcement</h3>
+      <p class="note">S = net income ÷ r<sub>s</sub>. V = S + D. Price = V ÷ 100,000 shares. Shares repurchased = D ÷ price. WACC uses market weights (D/V and S/V).</p>
+      <div class="table-wrap"><table id="cdss-new" class="by-debt"></table></div>
+
+      <h3>Which amount of debt is best?</h3>
+      <ul id="cdss-best" class="best"></ul>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>Runs entirely in your browser. Nothing is sent anywhere.</p>
+  </footer>
+
+  <script src="capstruct.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
