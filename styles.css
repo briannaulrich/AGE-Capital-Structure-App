@@ -11,6 +11,7 @@
   --warn: #8a4b00;
   --warn-soft: #fdf0dc;
   --row-alt: #faf9f6;
+  --sel: #fbeceb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +28,7 @@
     --warn: #ffc27a;
     --warn-soft: #3a2c17;
     --row-alt: #22252b;
+    --sel: #3a2624;
   }
 }
 
@@ -56,6 +58,7 @@ h1 { margin: 4px 0 8px; font-size: 1.75rem; line-height: 1.2; }
 
 h2 { font-size: 1.3rem; margin: 32px 0 6px; }
 h3 { font-size: 1.05rem; margin: 24px 0 6px; }
+h4 { font-size: 0.98rem; margin: 18px 0 6px; }
 
 .tag {
   display: inline-block;
@@ -114,6 +117,41 @@ tr.total td { font-weight: 600; border-top: 1px solid var(--border); }
 tr.key td { font-weight: 700; }
 tr.section td { font-weight: 600; color: var(--muted); padding-top: 10px; }
 td.best-cell { color: var(--good); }
+th.sel, td.sel { background: var(--sel) !important; }
+thead th.sel { color: var(--accent); }
+
+/* Levers: sliders and buttons */
+.lever {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 12px 0;
+}
+.lever-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.lever-head label { font-weight: 600; }
+.lever-head output { font-size: 1.35rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.lever input[type="range"] { width: 100%; margin: 10px 0 2px; accent-color: var(--accent); height: 28px; }
+.lever-scale { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.buttons button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+  cursor: pointer;
+}
+.buttons button:hover { background: var(--accent); color: #fff; }
+.buttons button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.lever .note { margin-bottom: 0; }
+.lever .check { margin-bottom: 0; }
+.stake-notes { padding-left: 20px; font-size: 0.9rem; color: var(--muted); margin: 6px 0; }
+.stake-notes li.warn { color: var(--warn); font-weight: 600; }
 td.best-cell::after { content: "★"; font-size: 0.85em; margin-left: 2px; } /* marks the best amount in a row */
 
 .firm-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
@@ -145,4 +183,9 @@ td.best-cell::after { content: "★"; font-size: 0.85em; margin-left: 2px; } /* 
   table.by-debt th:last-child, table.by-debt td:last-child { padding-right: 6px; }
   table.by-debt td.best-cell::after { font-size: 0.7em; margin-left: 0; vertical-align: 1px; }
   table.by-debt tbody tr:nth-child(4n), table.by-debt tbody tr:nth-child(4n-1) { background: var(--row-alt); }
+  .lever-scale { font-size: 0.66rem; }
 }
+
+/* Side-by-side tables: let the column headings wrap so they fit on a phone. */
+table.compare thead th { white-space: normal; vertical-align: bottom; }
+table.compare th:not(:first-child), table.compare td:not(:first-child) { width: 34%; }

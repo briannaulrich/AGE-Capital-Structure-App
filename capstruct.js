@@ -149,12 +149,12 @@
         ebt: ebt,
         taxes: taxes,
         netIncome: netIncome,
-        roe: netIncome / equity,
+        roe: equity > 0 ? netIncome / equity : null,
         tie: interest > 0 ? ebit / interest : null
       };
     });
     var p = years.map(function (y) { return y.probability; });
-    var roe = stats(p, years.map(function (y) { return y.roe; }));
+    var roe = equity > 0 ? stats(p, years.map(function (y) { return y.roe; })) : { mean: null, sd: null, cv: null };
     var hasInterest = debt * rate > 0;
     var tie = hasInterest ? stats(p, years.map(function (y) { return y.tie; })) : { mean: null, sd: null, cv: null };
     return { assets: totalAssets, debt: debt, equity: equity, years: years, roe: roe, tie: tie };
@@ -205,17 +205,34 @@
 
     var close = function (a, b) { return a !== null && b !== null && Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(b)); };
 
+    // Management's stake after the buyback. Management doesn't sell, so only
+    // outside investors' shares can be repurchased: (1 − management's share) × n.
+    var outsideShares = (1 - c.managementShare) * n;
+    function stake(repurchased, remaining) {
+      if (close(repurchased, outsideShares)) {
+        return { value: 1, status: 'all',
+          note: 'The buyback takes every outside share, so management would own 100% and no outside shareholders would be left.' };
+      }
+      if (repurchased > outsideShares) {
+        return { value: null, status: 'oversold',
+          note: 'The buyback needs more shares than outside investors own, so management would have to sell some of its shares.' };
+      }
+      return { value: c.managementShare * n / remaining, status: 'ok', note: null };
+    }
+
     return {
       debt: D, rd: rd, rs: rs,
       ebit: ebit, interest: interest, netIncome: netIncome, tie: tie,
       caseMethod: {
         repurchased: caseRepurchased, remaining: caseRemaining,
-        eps: caseEps, dps: caseEps, price: casePrice, wacc: waccBook
+        eps: caseEps, dps: caseEps, price: casePrice, wacc: waccBook,
+        managementStake: stake(caseRepurchased, caseRemaining)
       },
       newPriceMethod: {
         equityValue: S, firmValue: V, price: newPrice,
         repurchased: newRepurchased, remaining: newRemaining,
         eps: newEps, dps: newEps, wacc: waccMarket,
+        managementStake: stake(newRepurchased, newRemaining),
         checks: {
           epsEqualsRsTimesP: close(newEps, rs * newPrice),
           waccEqualsEbitAfterTaxOverV: close(waccMarket, waccMarketCheck)
@@ -266,6 +283,14 @@
     return { ebit: cdssEbit(c), rows: rows, best: best, zeroCheck: zeroCheck };
   }
 
+  // Where a button (Best price or Highest EPS) sends the CDSS debt slider.
+  // If both buyback methods pick the same amount, go there. If they differ,
+  // go to the case method's amount and flag it so the page can name both.
+  function buttonTarget(caseDebt, newDebt) {
+    return { debt: caseDebt, disagree: caseDebt !== newDebt, caseDebt: caseDebt, newDebt: newDebt };
+  }
+
+  exports.buttonTarget = buttonTarget;
   exports.parseCSV = parseCSV;
   exports.buildInputs = buildInputs;
   exports.roundHalfUp = roundHalfUp;

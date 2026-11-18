@@ -21,6 +21,21 @@
     <section id="firms" hidden>
       <h2>Firm U and Firm L <span class="tag">question c</span></h2>
       <p class="note" id="firms-intro"></p>
+
+      <div class="lever">
+        <div class="lever-head">
+          <label for="firm-l-debt">Firm L's debt</label>
+          <output id="firm-l-debt-out" for="firm-l-debt"></output>
+        </div>
+        <input type="range" id="firm-l-debt">
+        <div class="lever-scale"><span id="firm-l-min"></span><span id="firm-l-max"></span></div>
+        <div class="buttons"><button type="button" id="btn-case">Case</button></div>
+        <p class="note" id="firm-l-rate-note"></p>
+      </div>
+
+      <div class="table-wrap"><table id="firm-compare" class="compare"></table></div>
+
+      <h3>Full income statements</h3>
       <div class="firm-grid">
         <div class="table-wrap"><table id="firm-u"></table></div>
         <div class="table-wrap"><table id="firm-l"></table></div>
@@ -33,14 +48,35 @@
       <p class="note" id="cdss-intro"></p>
       <p id="zero-check" class="check"></p>
 
-      <h3>Same under both buyback methods</h3>
+      <div class="lever">
+        <div class="lever-head">
+          <label for="cdss-debt">CDSS borrows</label>
+          <output id="cdss-debt-out" for="cdss-debt"></output>
+        </div>
+        <input type="range" id="cdss-debt" min="0" step="1">
+        <div class="lever-scale" id="cdss-scale"></div>
+        <div class="buttons">
+          <button type="button" id="btn-best-price">Best price</button>
+          <button type="button" id="btn-best-eps">Highest EPS</button>
+        </div>
+        <p id="cdss-button-note" class="check fail" hidden></p>
+        <p class="note" id="cdss-rates"></p>
+      </div>
+
+      <div class="table-wrap"><table id="cdss-compare" class="compare"></table></div>
+      <ul id="cdss-stake-notes" class="stake-notes"></ul>
+
+      <h3>Every amount in the banker's schedule</h3>
+      <p class="note">The highlighted column is the amount the slider is on.</p>
+
+      <h4>Same under both buyback methods</h4>
       <div class="table-wrap"><table id="cdss-common" class="by-debt"></table></div>
 
-      <h3>Case method: buy back at today's $20 <span class="tag">d(3) and d(4)</span></h3>
+      <h4>Case method: buy back at today's $20 <span class="tag">d(3) and d(4)</span></h4>
       <p class="note">Shares repurchased = D ÷ $20. EPS = net income ÷ shares remaining. Price = EPS ÷ r<sub>s</sub>. WACC uses book weights, as the AGE solution does for d(7).</p>
       <div class="table-wrap"><table id="cdss-case" class="by-debt"></table></div>
 
-      <h3>New-price method: buy back at the price after the announcement</h3>
+      <h4>New-price method: buy back at the price after the announcement</h4>
       <p class="note">S = net income ÷ r<sub>s</sub>. V = S + D. Price = V ÷ 100,000 shares. Shares repurchased = D ÷ price. WACC uses market weights (D/V and S/V).</p>
       <div class="table-wrap"><table id="cdss-new" class="by-debt"></table></div>
 
