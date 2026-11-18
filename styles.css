@@ -1,0 +1,191 @@
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --text: #1d1f23;
+  --muted: #5b6170;
+  --border: #dedbd2;
+  --accent: #b3261e;      /* Utah Tech red */
+  --accent-soft: #f6e3e1;
+  --good: #1f6f43;
+  --good-soft: #e2f2e8;
+  --warn: #8a4b00;
+  --warn-soft: #fdf0dc;
+  --row-alt: #faf9f6;
+  --sel: #fbeceb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171b;
+    --surface: #1e2126;
+    --text: #e8e9ec;
+    --muted: #a3a8b4;
+    --border: #343841;
+    --accent: #ff8a80;
+    --accent-soft: #3a2422;
+    --good: #7fd6a2;
+    --good-soft: #1b3326;
+    --warn: #ffc27a;
+    --warn-soft: #3a2c17;
+    --row-alt: #22252b;
+    --sel: #3a2624;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.page-header, main, .page-footer {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.page-header { padding-top: 28px; padding-bottom: 8px; }
+.eyebrow { margin: 0; color: var(--accent); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 4px 0 8px; font-size: 1.75rem; line-height: 1.2; }
+.lede { margin: 0; color: var(--muted); }
+
+h2 { font-size: 1.3rem; margin: 32px 0 6px; }
+h3 { font-size: 1.05rem; margin: 24px 0 6px; }
+h4 { font-size: 0.98rem; margin: 18px 0 6px; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.note { color: var(--muted); font-size: 0.92rem; margin: 4px 0 10px; }
+
+code { font-size: 0.9em; }
+
+.status { padding: 10px 12px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); }
+.status.error { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
+
+.check { font-size: 0.92rem; padding: 8px 12px; border-radius: 8px; margin: 8px 0; }
+.check.ok { background: var(--good-soft); color: var(--good); }
+.check.fail { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+
+/* Tables */
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+caption {
+  text-align: left;
+  font-weight: 600;
+  padding: 10px 10px 4px;
+}
+
+th, td { padding: 5px 10px; text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+thead th { border-bottom: 2px solid var(--border); font-weight: 600; color: var(--muted); }
+tbody tr:nth-child(even) { background: var(--row-alt); }
+table.by-debt tbody tr:nth-child(even) { background: none; }
+table.by-debt tbody tr.value-row:nth-child(4n) { background: var(--row-alt); }
+tr.label-row { display: none; }
+tr.total td { font-weight: 600; border-top: 1px solid var(--border); }
+tr.key td { font-weight: 700; }
+tr.section td { font-weight: 600; color: var(--muted); padding-top: 10px; }
+td.best-cell { color: var(--good); }
+th.sel, td.sel { background: var(--sel) !important; }
+thead th.sel { color: var(--accent); }
+
+/* Levers: sliders and buttons */
+.lever {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 12px 0;
+}
+.lever-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.lever-head label { font-weight: 600; }
+.lever-head output { font-size: 1.35rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.lever input[type="range"] { width: 100%; margin: 10px 0 2px; accent-color: var(--accent); height: 28px; }
+.lever-scale { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.buttons button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+  cursor: pointer;
+}
+.buttons button:hover { background: var(--accent); color: #fff; }
+.buttons button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.lever .note { margin-bottom: 0; }
+.lever .check { margin-bottom: 0; }
+.stake-notes { padding-left: 20px; font-size: 0.9rem; color: var(--muted); margin: 6px 0; }
+.stake-notes li.warn { color: var(--warn); font-weight: 600; }
+td.best-cell::after { content: "★"; font-size: 0.85em; margin-left: 2px; } /* marks the best amount in a row */
+
+.firm-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .firm-grid { grid-template-columns: 1fr 1fr; } }
+
+.best { padding-left: 20px; margin: 6px 0; }
+.best li { margin: 4px 0; }
+.best .agree { color: var(--good); font-weight: 600; }
+.best .disagree { color: var(--warn); font-weight: 600; }
+
+.page-footer { color: var(--muted); font-size: 0.85rem; padding-top: 24px; padding-bottom: 32px; }
+
+/* Narrow phones: tighten tables so five debt columns fit at 375px. */
+@media (max-width: 480px) {
+  h1 { font-size: 1.45rem; }
+  table { font-size: 0.74rem; }
+  th, td { padding: 4px 4px; }
+  th:first-child, td:first-child { padding-left: 8px; min-width: 76px; }
+  th:last-child, td:last-child { padding-right: 8px; }
+
+  /* CDSS tables: label on its own line, numbers below across the full width. */
+  table.by-debt { font-size: 0.7rem; letter-spacing: -0.01em; }
+  table.by-debt th:first-child, table.by-debt tr.value-row td:first-child { display: none; }
+  table.by-debt tr.label-row { display: table-row; }
+  table.by-debt tr.label-row td { text-align: left; padding: 6px 8px 0; color: var(--muted); font-weight: 600; }
+  table.by-debt tr.value-row td { padding-top: 0; padding-bottom: 6px; }
+  table.by-debt th, table.by-debt td { padding-left: 1px; padding-right: 1px; }
+  table.by-debt th:nth-child(2), table.by-debt tr.value-row td:nth-child(2) { padding-left: 6px; }
+  table.by-debt th:last-child, table.by-debt td:last-child { padding-right: 6px; }
+  table.by-debt td.best-cell::after { font-size: 0.7em; margin-left: 0; vertical-align: 1px; }
+  table.by-debt tbody tr:nth-child(4n), table.by-debt tbody tr:nth-child(4n-1) { background: var(--row-alt); }
+  .lever-scale { font-size: 0.66rem; }
+}
+
+/* Side-by-side tables: let the column headings wrap so they fit on a phone. */
+table.compare thead th { white-space: normal; vertical-align: bottom; }
+table.compare th:not(:first-child), table.compare td:not(:first-child) { width: 34%; }
