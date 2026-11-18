@@ -355,6 +355,18 @@
     $('cdss').hidden = false;
   }
 
+  // ---------- Progressive web app ----------
+
+  // Register the service worker (sw.js) so the app installs and works offline.
+  // The path is relative, so it works at https://<username>.github.io/<repository>/.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function (err) {
+        console.warn('Service worker not registered:', err);
+      });
+    });
+  }
+
   // ---------- Load the data ----------
 
   var files = {
